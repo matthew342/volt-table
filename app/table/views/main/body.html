@@ -1,0 +1,26 @@
+<:Body>
+  <tbody>
+    {{ unless current_page.loaded? }}
+      <tr>
+        <td class="loading" colspan="{{ page._table._columns.size }}">
+          Loading...
+          Someone please make me pretty!
+        </td>
+      </tr>
+    {{ end }}
+    {{ if false }}
+      {{ yield }}
+    {{ else }}
+      {{ current_page.each do |data| }}
+        <tr e-click="trigger_row_click(data.id)">
+            {{ page._table._columns.each do |item| }}
+              {{ if item._shown }}
+                <td>
+                  {{ raw(data.send(item._field_name)) }}
+                </td>
+              {{ end }}
+            {{ end }}
+        </tr>
+      {{ end }}
+    {{ end }}
+  </tbody>

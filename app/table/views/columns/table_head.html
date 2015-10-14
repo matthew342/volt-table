@@ -1,0 +1,13 @@
+<:Body>
+	<th>
+		{{ if attrs.sort_name }}
+			<a e-click="sort(attrs.sort_name)" >
+				{{ attrs.label }}
+				{{ if params._sort_field == attrs.sort_name }}
+					<span class="glyphicon glyphicon-chevron-{{sort_direction(attrs.sort_reverse)}}"></span>
+				{{ end }}
+			</a>
+		{{ else }}
+			{{ attrs.label }}
+		{{ end }}
+	</th>

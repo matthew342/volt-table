@@ -1,0 +1,47 @@
+<:Body>
+  <div class="row">
+    <div class="col-sm-12">
+      <div class="input-group">
+        <div class="input-group">
+          <span class="glyphicon input-group-addon glyphicon-search"></span>
+          <input type="text" class="form-control" placeholder="Search" value="{{ search_term }}" e-keyup="search">
+        </div>
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Show {{ params._per_page }}
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            <li class="{{ if size == 10 }} active {{ end }}"><a href="#" e-click="set_table_size(10)">10</a></li>
+            <li class="{{ if size == 25 }} active {{ end }}"><a href="#" e-click="set_table_size(25)">25</a></li>
+            <li class="{{ if size == 50 }} active {{ end }}"><a href="#" e-click="set_table_size(50)">50</a></li>
+          </ul>
+        </div>
+        <!-- /input-group-btn -->
+        <div class="input-group-btn">
+          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <span class="glyphicon glyphicon-th"></span>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-right">
+            {{ page._table._columns.each do |field| }}
+              {{ if field.key?('title') }}
+                <li>
+                  <div class="checkbox">
+                    <label class="dropdown-item">
+                      <input name="shown_fields" type="checkbox" class="dropdown-item-checkbox" checked="{{ field._shown }}">
+                      {{ field._title }}
+                    </label>
+                  </div>
+                </li>
+                {{ end }}
+              {{ end }}
+          </ul>
+        </div>
+        <!-- /btn-group -->
+      </div>
+      <!-- /input-group -->
+    </div>
+    <!-- /.col-lg-6 -->
+  </div>
+  <!-- /.row -->

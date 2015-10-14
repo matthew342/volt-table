@@ -1,0 +1,14 @@
+<:Body>
+  <div class="row">
+    <div class="col-xs-12 col-sm-9">
+      <:pagination total="{{ attrs.table_size }}" per_page="{{ params._per_page }}" />
+    </div>
+    <div class="col-xs-12 col-sm-3 col-md-3 col-lg-3 infoBar" style="padding-left:0px;">
+      <div class="infos">
+        Showing {{ start_offset+1 }} - {{ last_item }} of {{ attrs.table_size }}
+        <div>
+          <small>Filtered from a total of {{ attrs.total_size }}</small>
+        </div>
+      </div>
+    </div>
+  </div>

@@ -1,0 +1,10 @@
+<:Body>
+	<thead>
+		<tr>
+			{{ page._table._columns.each do |label| }}
+			 	{{ if label._shown }}
+					<:table_head label="{{ label._title }}" sort_name="{{ label._sort_name }}" sort_reverse="{{ label._sort_reverse }}"/>
+				{{ end }}
+			{{ end }}
+		</tr>
+	</thead>
