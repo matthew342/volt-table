@@ -1,3 +1,6 @@
+# WORK IN PROGRESS
+*Not ready for use*
+
 # Volt::Table
 
 TODO: Write a gem description
