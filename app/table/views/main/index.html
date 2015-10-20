@@ -1,7 +1,7 @@
 <:Body>
   <:table:headers />
-  <:table:wrapper e-row_click="trigger_row_click">
+  <:table:wrapper>
     <:table:columns />
-    <:table:main:body e-row_click="trigger_row_click" source="{{ attrs.source }}"/>
+    <:table:main:body source="{{ attrs.source }}"/>
   </:table:wrapper>
   <:table:footers table_size="{{ table_size }}" total_size="{{ total_size }}"/>

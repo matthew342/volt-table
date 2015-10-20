@@ -8,7 +8,31 @@ module Table
     end
 
     def trigger_row_click(item_id)
-      trigger('row_click', item_id)
+      # event = page._table._default_e_click
+      # event ||=
+      # trigger('row_click', item_id)
+    end
+
+    def td_click(item_id, col_index = nil)
+      event = page._table._columns[col_index]._click_event
+      event ||= page._table._default_click_event
+      trigger(event, item_id, col_index)
+    end
+
+    def inner_click(item_id, col_index = nil)
+      puts 'triggered in table main_controller'
+      event = page._table._columns[col_index]._e_click
+      event ||= page._table._default_e_click
+      puts event
+      trigger('outer_click', item_id, col_index)
+    end
+
+    def trigger_click(item_id, col_index = nil)
+      puts 'triggered in table main_controller'
+      event = page._table._columns[col_index]._e_click
+      event ||= page._table._default_e_click
+      puts event
+      trigger(event, item_id, col_index)
     end
 
     def start_offset
@@ -44,8 +68,7 @@ module Table
 
     def total_size
       # TODO: volt-mongo loads the entire collection into memory for counts as of 9-7-15
-      #attrs.total_size || attrs.source.count
-      500
+      attrs.total_size || 500 #attrs.source.count
     end
 
     def table_size

@@ -12,10 +12,10 @@
       {{ yield }}
     {{ else }}
       {{ current_page.each do |data| }}
-        <tr e-click="trigger_row_click(data.id)">
-            {{ page._table._columns.each do |item| }}
+        <tr>
+            {{ page._table._columns.each_with_index do |item, index| }}
               {{ if item._shown }}
-                <td>
+                <td e-click="td_click(data.id, index)">
                   {{ raw(data.send(item._field_name)) }}
                 </td>
               {{ end }}
