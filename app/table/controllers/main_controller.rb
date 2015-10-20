@@ -13,25 +13,10 @@ module Table
       # trigger('row_click', item_id)
     end
 
-    def td_click(item_id, col_index = nil)
+    def td_click(item_id, col_index)
       event = page._table._columns[col_index]._click_event
       event ||= page._table._default_click_event
-      trigger(event, item_id, col_index)
-    end
-
-    def inner_click(item_id, col_index = nil)
-      puts 'triggered in table main_controller'
-      event = page._table._columns[col_index]._e_click
-      event ||= page._table._default_e_click
-      puts event
-      trigger('outer_click', item_id, col_index)
-    end
-
-    def trigger_click(item_id, col_index = nil)
-      puts 'triggered in table main_controller'
-      event = page._table._columns[col_index]._e_click
-      event ||= page._table._default_e_click
-      puts event
+      puts "triggering #{event}"
       trigger(event, item_id, col_index)
     end
 
