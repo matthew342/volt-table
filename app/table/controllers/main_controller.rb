@@ -16,7 +16,6 @@ module Table
     def td_click(item_id, col_index)
       event = page._table._columns[col_index]._click_event
       event ||= page._table._default_click_event
-      puts "triggering #{event}"
       trigger(event, item_id, col_index)
     end
 
@@ -25,7 +24,9 @@ module Table
     end
 
     def searched_data
-      query = { '$regex' => params._query || '', '$options' => 'i' }
+      if params._query
+        query = { '$regex' => params._query.scan(/([^\s|,]+)/).join('|') || '', '$options' => 'i' }
+      end
       search_hsh = []
       page._table._search_fields.each do |field|
         search_hsh << {field => query}
