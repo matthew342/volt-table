@@ -24,18 +24,67 @@ module Table
     end
 
     def searched_data
-      if params._query
-        query = { '$regex' => params._query.scan(/([^\s|,]+)/).join('|') || '', '$options' => 'i' }
+      if params._query && !params._query.empty?
+        query = build_query
       end
-      search_hsh = []
-      page._table._search_fields.each do |field|
-        search_hsh << {field => query}
+      attrs.source.where(query)
+    end
+
+    def build_query
+      ands = []
+      # split at commas to get my array of queries (commas are AND)
+      and_pieces = params._query.split(', ')
+      and_pieces.each do |and_piece|
+        ands << recursive_query_parse(and_piece)
       end
-      base = attrs.source
-      unless search_hsh.empty?
-        base = base.where({'$or' => search_hsh})
+      search_query = {'$and' => ands}
+      puts search_query
+      search_query
+    end
+
+    def recursive_query_parse(query)
+      inner_query = []
+      or_pieces = query.split(' | ')
+      or_pieces.each do |query|
+        # split the query to get an 'or' pieces (separated by a pipe)
+        if query.is_a?(Array)
+          inner_query.push(recursive_query_parse(query)).flatten!
+        else
+          inner_query.push(name_match(query)).flatten!
+          inner_query.push(other_match(query)).flatten!
+        end
       end
-      base
+      {'$or' => inner_query}
+    end
+
+    def name_match(query)
+      name_queries = []
+      name_matchset = query.match(/(\w*)\s?(\w*)?/)
+      last_name_query = name_matchset[2] || name_matchset[1]
+      if name_matchset
+        if page._table._search_fields.include?('first_name')
+          name_queries << {:first_name => { '$regex' => name_matchset[1] || '', '$options' => 'i' }}
+        end
+        if page._table._search_fields.include?('last_name')
+          name_queries << {:last_name => { '$regex' => last_name_query || '', '$options' => 'i' }}
+        end
+      end
+      if name_queries.length > 1 && name_matchset[2]
+        {'$and' => name_queries}
+      else
+        name_queries
+      end
+    end
+
+    def other_match(query)
+      other_queries = []
+      clean_string = query.gsub(/(\w*)\s(\w*)/, '')
+      unless clean_string.empty?
+        page._table._search_fields.reject { |field_name| field_name.include?('name') }.each do |field|
+          other_queries << {field => { '$regex' => clean_string, '$options' => 'i' }}
+        end
+      end
+      other_queries
     end
 
     def ordered_data
