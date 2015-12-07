@@ -31,15 +31,17 @@ module Table
     end
 
     def build_query
-      ands = []
-      # split at commas to get my array of queries (commas are AND)
-      and_pieces = params._query.split(', ')
-      and_pieces.each do |and_piece|
-        ands << recursive_query_parse(and_piece)
+      if params._query
+        ands = []
+        # split at commas to get my array of queries (commas are AND)
+        and_pieces = params._query.split(', ')
+        and_pieces.each do |and_piece|
+          ands << recursive_query_parse(and_piece)
+        end
+        search_query = {'$and' => ands}
+        #puts search_query
+        search_query
       end
-      search_query = {'$and' => ands}
-      puts search_query
-      search_query
     end
 
     def recursive_query_parse(query)
