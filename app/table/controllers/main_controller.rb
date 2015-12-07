@@ -80,7 +80,7 @@ module Table
       other_queries = []
       clean_string = query.gsub(/(\w*)\s(\w*)/, '')
       unless clean_string.empty?
-        page._table._search_fields.reject { |field_name| field_name.include?('name') }.each do |field|
+        page._table._search_fields.reject { |field_name| field_name.include?('first_name') || field_name.include?('last_name')}.each do |field|
           other_queries << {field => { '$regex' => clean_string, '$options' => 'i' }}
         end
       end
