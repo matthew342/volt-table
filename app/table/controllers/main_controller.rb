@@ -110,8 +110,8 @@ module Table
 
     def table_size
       # TODO: volt-mongo loads the entire collection into memory for counts as of 9-7-15
-      #searched_data.count
-      500
+      # searched_data.count
+      attrs.total_size || 500
     end
 
   end
