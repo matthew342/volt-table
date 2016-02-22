@@ -1,6 +1,16 @@
 <:Body>
 	<th>
 		{{ if attrs.sort_name }}
+		<li class="dropdown  open">
+				<a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="true">
+					<span class="caret"></span>
+				</a>
+				<ul class="dropdown-menu">
+					<li>
+						<fields:select value="" options="['Hello']"/>
+					</li>
+				</ul>
+			</li>
 			<a e-click="sort(attrs.sort_name)" >
 				{{ attrs.label }}
 				{{ if params._sort_field == attrs.sort_name }}

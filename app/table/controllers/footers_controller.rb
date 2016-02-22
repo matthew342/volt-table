@@ -14,9 +14,5 @@ module Table
         end
       end
     end
-
-    def table_size
-      CountTask.count({})
-    end
   end
 end
