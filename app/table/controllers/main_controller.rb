@@ -41,7 +41,7 @@ module Table
 
         puts and_pieces
         and_pieces.each_with_index do |piece, i|
-          if /\s/.match(piece)
+          if /\s/.match(piece) && !/|/.match(piece)
             space = piece.split(' ')
             space.each do |s|
               ands << recursive_query_parse(s)
@@ -158,7 +158,20 @@ module Table
     def current_page
       per_page = params._per_page.to_i
       per_page = 10 unless per_page > 0
-      ordered_data.skip(start_offset).limit(per_page)
+      puts column_filters
+      ordered_data.where(column_filters).skip(start_offset).limit(per_page)
+    end
+
+    def column_filters
+      ands = []
+      if page._column_filt == nil || page._column_filt = ''
+        {}
+      else
+        page._column_filt.each do |filter|
+          ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
+        end
+        {'$and' => ands}
+      end
     end
 
     def total_size

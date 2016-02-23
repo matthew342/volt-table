@@ -7,6 +7,9 @@
           <input type="text" class="form-control" placeholder="Search" value="{{ search_term }}" e-keyup="search">
         </div>
         <div class="input-group-btn">
+          <button type="button" class="btn btn-default" e-click="show_sort_modal">Sort/Filter Options</button>
+        </div>
+        <div class="input-group-btn">
           <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Show {{ params._per_page }}
             <span class="caret"></span>
@@ -45,3 +48,4 @@
     <!-- /.col-lg-6 -->
   </div>
   <!-- /.row -->
+  <:modal />
