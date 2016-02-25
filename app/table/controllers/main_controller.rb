@@ -26,6 +26,8 @@ module Table
     def searched_data
       if params._query && !params._query.empty?
         query = build_query
+      else
+        query = column_filters
       end
       attrs.source.where(query)
     end
@@ -35,116 +37,66 @@ module Table
         ands = []
         # split at commas to get my array of queries (commas are AND)
         and_pieces = params._query.split(', ')
-
-        search_fields = []
-        search_fields = find_fields
-
-        puts and_pieces
         and_pieces.each_with_index do |piece, i|
-          if /\s/.match(piece) && !/|/.match(piece)
-            space = piece.split(' ')
-            space.each do |s|
-              ands << recursive_query_parse(s)
-            end
-          elsif /|/.match(piece)
+          if piece =~ /\|/
             or_query = []
             or_pieces = piece.split(' | ')
             or_pieces.each_with_index do |p, i|
               if /:/.match(p)
-                clean_string = p.split(':')
-                if search_fields.include?(clean_string[0])
-                  or_query.push({clean_string[0] => {"$regex"=>clean_string[1], "$options"=>"i"}}).flatten!
-                end
+                or_query.push(field_match(p)).flatten!
               else
-                or_query.push(name_match(p)).flatten!
-                or_query.push(other_match(p)).flatten!
+                or_query.push(any_match(p)).flatten!
               end
             end
             ands << {'$or' => or_query}
           elsif /:/.match(piece) # if part of the query is a specific field search
-            clean_string = piece.split(':')
-            if search_fields.include?(clean_string[0])
-              ands << {'$or' => [{clean_string[0] => {"$regex"=>clean_string[1], "$options"=>"i"}}]}
-            end
+            ands << field_match(piece)
           else
-            ands << recursive_query_parse(piece)
+            ands << {'$or' => any_match(piece)}
           end
         end
-        search_query = {}
-
-
-
-        # and_pieces = params._query.split(', ')
-        # and_pieces.each do |and_piece|
-        #   ands << recursive_query_parse(and_piece)
-        # end
-        search_query = {'$and' => ands}
-        puts search_query
-        search_query
+        ands << column_filters
+        {'$and' => ands}
       end
     end
 
-    def find_fields
-      search_fields = []
+    def field_match(query)
+      clean_string = query.split(': ')
+      if search_fields.has_key?(clean_string[0])
+        {search_fields[clean_string[0]] => {"$regex"=>clean_string[1], "$options"=>"i"}}
+      else
+        {}
+      end
+    end
+
+    def any_match(query)
+      match = []
+      search_fields.values.each do |field|
+        match << {field => { '$regex' => "#{query}", '$options' => 'i' }}
+      end
+      match
+    end
+
+    def column_filters
+      ands = []
+      if page._column_filt == nil || page._column_filt == []
+        {}
+      else
+        page._column_filt.each do |filter|
+          ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
+        end
+        {'$and' => ands}
+      end
+    end
+
+    def search_fields
+      fields = {}
       page._table._columns.each do |col|
         unless col._search_field == nil
-          search_fields.push(col._search_field)
+          fields[col._search_field] = col._field_name
         end
       end
-      search_fields
-    end
-
-    def field_match(fields, query)
-      if fields.include?(query)
-        query
-      else
-        recursive_query_parse(query)
-      end
-    end
-
-    def recursive_query_parse(query)
-      inner_query = []
-      or_pieces = query.split(' | ')
-      or_pieces.each do |query|
-        # split the query to get an 'or' pieces (separated by a pipe)
-        if query.is_a?(Array)
-          inner_query.push(recursive_query_parse(query)).flatten!
-        else
-          inner_query.push(name_match(query)).flatten!
-          inner_query.push(other_match(query)).flatten!
-        end
-      end
-      {'$or' => inner_query}
-    end
-
-    def name_match(query)
-      name_queries = []
-      name_matchset = query.match(/(\w*)\s?(\w*)?/)
-      last_name_query = name_matchset[2] || name_matchset[1]
-      if name_matchset
-        if page._table._search_fields.include?('first_name')
-          name_queries << {:first_name => { '$regex' => name_matchset[1] || '', '$options' => 'i' }}
-        end
-        if page._table._search_fields.include?('last_name')
-          name_queries << {:last_name => { '$regex' => last_name_query || '', '$options' => 'i' }}
-        end
-      end
-      if name_queries.length > 1 && name_matchset[2]
-        {'$and' => name_queries}
-      else
-        name_queries
-      end
-    end
-
-    def other_match(query)
-      other_queries = []
-      clean_string = query.gsub(/(\w*)\s(\w*)/, '')
-      unless clean_string.empty?
-        page._table._search_fields.reject { |field_name| field_name.include?('first_name') || field_name.include?('last_name')}.each do |field|
-          other_queries << {field => { '$regex' => clean_string, '$options' => 'i' }}
-        end
-      end
-      other_queries
+      fields
     end
 
     def ordered_data
@@ -158,20 +110,7 @@ module Table
     def current_page
       per_page = params._per_page.to_i
       per_page = 10 unless per_page > 0
-      puts column_filters
-      ordered_data.where(column_filters).skip(start_offset).limit(per_page)
-    end
-
-    def column_filters
-      ands = []
-      if page._column_filt == nil || page._column_filt = ''
-        {}
-      else
-        page._column_filt.each do |filter|
-          ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
-        end
-        {'$and' => ands}
-      end
+      ordered_data.skip(start_offset).limit(per_page)
     end
 
     def total_size

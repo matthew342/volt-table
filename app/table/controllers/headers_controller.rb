@@ -18,11 +18,25 @@ module Table
       self.values = []
     end
 
+    def toggle_popover
+      # message = " <b>' | '</b> - or <br> <b>', '</b> - and <br>"
+      # search_fields.each do |field|
+      #   message = message + "<b>#{field['field']}:</b> #{field['title']} <br>"
+      # end
+      # message
+      if `$('#popover').css('display') == 'none'`
+        `$('#popover').css('display', 'block')`
+      else
+        `$('#popover').css('display', 'none')`
+      end
+    end
+
     def apply_filters
       page._column_filt = []
+      puts search_fields
       options.each_with_index do |opt, i|
         unless options[i] == nil || values[i] == nil
-          page._column_filt << {col: "#{search_fields[0]}", option: "#{options[0]}", value: "#{values[i]}" }
+          page._column_filt << {col: "#{search_fields[i]['field']}", option: "#{options[i]}", value: "#{values[i]}" }
         end
       end
       `$('#sortModal').modal('hide');`
@@ -40,7 +54,7 @@ module Table
       search_fields = []
       page._table._columns.each do |col|
         unless col._search_field == nil
-          search_fields.push(col._search_field)
+          search_fields << {title: col._title, field: col._field_name, search: col._search_field}
         end
       end
       search_fields

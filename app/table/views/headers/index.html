@@ -3,7 +3,19 @@
     <div class="col-sm-12">
       <div class="input-group">
         <div class="input-group">
-          <span class="glyphicon input-group-addon glyphicon-search"></span>
+          <span e-click="toggle_popover" class="glyphicon input-group-addon glyphicon-search">
+          <div class="popover fade right in" role="tooltip" id="popover" style="top: -60px; left: 39px; display: block;">
+            <div class="arrow" style="top: 75px"></div>
+            <h3 class="popover-title">Search Help</h3>
+            <div class="popover-content">
+              <b>' | '</b> - or <br />
+              <b>', '</b> - and<br>
+              {{ search_fields.each do |field| }}
+              <b>{{ field['search'] }}:</b> {{field['title']}}<br>
+              {{ end }}
+            </div>
+          </div>
+          </span>
           <input type="text" class="form-control" placeholder="Search" value="{{ search_term }}" e-keyup="search">
         </div>
         <div class="input-group-btn">
