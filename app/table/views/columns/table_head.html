@@ -1,12 +1,16 @@
 <:Body>
-	<th>
+	<th class="{{ if params._sort_field == attrs.sort_name }} selected {{ end }}">
 		{{ if attrs.sort_name }}
-			<a e-click="sort(attrs.sort_name)" >
-				{{ attrs.label }}
+			<div>
+				<span e-click="show_sort_modal" class="fa fa-toggle-down pull-left options"></span>
+				<a e-click="sort(attrs.sort_name)">{{ attrs.label }}
 				{{ if params._sort_field == attrs.sort_name }}
-					<span class="glyphicon glyphicon-chevron-{{sort_direction(attrs.sort_reverse)}}"></span>
+					<span class="fa fa-sort-{{sort_direction(attrs.sort_reverse)}}"></span>
+				{{ else }}
+					<span class="fa fa-sort"></span>
 				{{ end }}
-			</a>
+				</a>
+			</div>
 		{{ else }}
 			{{ attrs.label }}
 		{{ end }}

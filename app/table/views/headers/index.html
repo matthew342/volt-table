@@ -4,7 +4,7 @@
       <div class="input-group">
         <div class="input-group">
           <span e-click="toggle_popover" class="glyphicon input-group-addon glyphicon-search">
-          <div class="popover fade right in" role="tooltip" id="popover" style="top: -60px; left: 39px; display: block;">
+          <div class="popover fade right in" role="tooltip" id="popover">
             <div class="arrow" style="top: 75px"></div>
             <h3 class="popover-title">Search Help</h3>
             <div class="popover-content">
@@ -19,10 +19,10 @@
           <input type="text" class="form-control" placeholder="Search" value="{{ search_term }}" e-keyup="search">
         </div>
         <div class="input-group-btn">
-          <button type="button" class="btn btn-default" e-click="show_sort_modal">Sort/Filter Options</button>
+          <button type="button" class="btn btn-default btn-left" e-click="show_sort_modal">Sort/Filter Options</button>
         </div>
         <div class="input-group-btn">
-          <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <button type="button" class="btn btn-default btn-middle dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             Show {{ params._per_page }}
             <span class="caret"></span>
           </button>

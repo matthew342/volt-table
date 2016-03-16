@@ -24,5 +24,9 @@ module Table
       end
     end
 
+    def show_sort_modal
+      `$('#sortModal').modal('show');`
+    end
+
   end
 end

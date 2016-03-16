@@ -15,7 +15,7 @@
         <tr>
             {{ page._table._columns.each_with_index do |item, index| }}
               {{ if item._shown }}
-                <td e-click="td_click(data.id, index)">
+                <td e-click="td_click(data.id, index)" class="{{ if params._sort_field == item._sort_name }} selected_body {{ end }}">
                   {{ raw(data.send(item._field_name)) }}
                 </td>
               {{ end }}

@@ -5,10 +5,9 @@ module Table
     reactive_accessor :values
     before_action :set_default_options
 
-    def set_default_options
-      params._per_page ||= 10
-    end
-
+    ##################
+    # Actions
+    ##################
     def index
       self.search_term = params._query
     end
@@ -18,12 +17,29 @@ module Table
       self.values = []
     end
 
+    ######################
+    # callbacks
+    ######################
+    def set_default_options
+      params._per_page ||= 10
+    end
+
+    ######################
+    # Data Sources
+    ######################
+
+    def size
+      params._per_page.to_i
+    end
+
+    def set_table_size(size)
+      params._per_page = size
+    end
+
+    ####################
+    # Events
+    ####################
     def toggle_popover
-      # message = " <b>' | '</b> - or <br> <b>', '</b> - and <br>"
-      # search_fields.each do |field|
-      #   message = message + "<b>#{field['field']}:</b> #{field['title']} <br>"
-      # end
-      # message
       if `$('#popover').css('display') == 'none'`
         `$('#popover').css('display', 'block')`
       else
@@ -40,14 +56,6 @@ module Table
         end
       end
       `$('#sortModal').modal('hide');`
-    end
-
-    def size
-      params._per_page.to_i
-    end
-
-    def set_table_size(size)
-      params._per_page = size
     end
 
     def search_fields
