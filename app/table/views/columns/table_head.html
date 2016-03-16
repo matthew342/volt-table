@@ -2,7 +2,26 @@
 	<th class="{{ if params._sort_field == attrs.sort_name }} selected {{ end }}">
 		{{ if attrs.sort_name }}
 			<div>
-				<span e-click="show_sort_modal" class="fa fa-toggle-down pull-left options"></span>
+
+				<div class="dropdown" style="inline-block">
+				  <span class="fa fa-toggle-down pull-left options dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+				  <ul id="dropdown" class="dropdown-menu keep-open-on-click" aria-labelledby="dropdownMenu1">
+						<form e-submit="apply_filters(attrs.field_name)">
+				    <li style="padding: 5px;">
+							<select value="{{options}}" class="form-control">
+								<option value=""></option>
+								<option value="$ne">Not Equal</option>
+								<option value="$gt">Greater Than</option>
+								<option value="$lt">Less Than</option>
+							</select>
+						</li>
+				    <li style="padding: 5px;"><:fields:text value="{{ values }}" label=false /></li>
+				    <li role="separator" class="divider"></li>
+						<li style="padding: 5px;"><button type="reset" e-click="reset(attrs.field_name)" class="btn btn-default btn-block">Reset</button></li>
+				    <li style="padding: 5px;"><button type="submit" class="btn btn-default btn-block">Apply</button></li>
+					</form>
+				  </ul>
+				</div>
 				<a e-click="sort(attrs.sort_name)">{{ attrs.label }}
 				{{ if params._sort_field == attrs.sort_name }}
 					<span class="fa fa-sort-{{sort_direction(attrs.sort_reverse)}}"></span>

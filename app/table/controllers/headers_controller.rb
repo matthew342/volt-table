@@ -49,7 +49,6 @@ module Table
 
     def apply_filters
       page._column_filt = []
-      puts search_fields
       options.each_with_index do |opt, i|
         unless options[i] == nil || values[i] == nil
           page._column_filt << {col: "#{search_fields[i]['field']}", option: "#{options[i]}", value: "#{values[i]}" }
@@ -92,7 +91,8 @@ module Table
     end
 
     def show_sort_modal
-      `$('#sortModal').modal('show');`
+      page._column_filt = []
+      # `$('#sortModal').modal('show');`
     end
 
   end

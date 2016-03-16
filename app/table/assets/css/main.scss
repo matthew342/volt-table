@@ -20,7 +20,7 @@ th > div, th a {
   min-width: 50px;
   color: black;
 }
-th > div > span:hover {
+th > div > div >span:hover {
   cursor: pointer;
 }
 th a:hover, a:focus {
@@ -49,6 +49,7 @@ th.selected > div > a > span {
 }
 .options {
   color: black !important;
+  margin-top: 3px;
 }
 .options:hover {
   color: #337ab7 !important;
@@ -60,4 +61,13 @@ th.selected > div > a > span {
   border-right: none;
   border-top-right-radius: 0px;
   border-bottom-right-radius: 0px;
+}
+.infos {
+  float: right;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  padding: 20px;
+}
+.keep-open-on-click {
+  top: 20px;
 }
