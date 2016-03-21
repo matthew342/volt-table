@@ -37,7 +37,6 @@ module Table
 
     def apply_filters(item)
       page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
-
       unless options == nil || values == nil || options == '' || values == ''
         page._column_filt << {col: "#{item}", option: "#{options}", value: "#{values}" }
       end
@@ -47,7 +46,6 @@ module Table
       options = ""
       values = ""
       if page._column_filt.any? { |x| x._col == item.to_s }
-        puts 'deleting'
         page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
       end
     end

@@ -90,9 +90,8 @@ module Table
       search
     end
 
-    def show_sort_modal
+    def clear_filters
       page._column_filt = []
-      # `$('#sortModal').modal('show');`
     end
 
   end

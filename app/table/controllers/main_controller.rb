@@ -36,11 +36,11 @@ module Table
       if params._query
         ands = []
         # split at commas to get my array of queries (commas are AND)
-        and_pieces = params._query.split(', ')
+        and_pieces = params._query.split(',').map(&:strip)
         and_pieces.each_with_index do |piece, i|
           if piece =~ /\|/
             or_query = []
-            or_pieces = piece.split(' | ')
+            or_pieces = piece.split('|').map(&:strip)
             or_pieces.each_with_index do |p, i|
               if /:/.match(p)
                 or_query.push(field_match(p)).flatten!
@@ -61,7 +61,7 @@ module Table
     end
 
     def field_match(query)
-      clean_string = query.split(': ')
+      clean_string = query.split(':').map(&:strip)
       if search_fields.has_key?(clean_string[0])
         {search_fields[clean_string[0]] => {"$regex"=>clean_string[1], "$options"=>"i"}}
       else
