@@ -35,6 +35,9 @@ module Table
       end
     end
 
+    ####################
+    ## Column Filters ##
+    ####################
     def apply_filters(item)
       page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
       unless options == nil || values == nil || options == '' || values == ''
@@ -47,6 +50,23 @@ module Table
       values = ""
       if page._column_filt.any? { |x| x._col == item.to_s }
         page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
+      end
+    end
+
+    def filter_label(filter)
+      if page._column_filt.any? { |x| x._col == filter.to_s }
+        index = page._column_filt.index {|x| x._col == filter.to_s }
+        if page._column_filt[index]._option.to_s == '$ne'
+          "!= #{page._column_filt[index]._value}"
+        elsif page._column_filt[index]._option == '$gt'
+          "> #{page._column_filt[index]._value}"
+        elsif page._column_filt[index]._option == '$lt'
+          "< #{page._column_filt[index]._value}"
+        else
+          ""
+        end
+      else
+        ""
       end
     end
   end
