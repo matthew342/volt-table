@@ -9,11 +9,18 @@
 					<span class="fa fa-sort"></span>
 				{{ end }}
 				</a>
+			</div>
+			<div>
 				<div class="filter-label">
 					<div class="dropdown">
-					  <span class="fa fa-ellipsis-h" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						{{ if page._column_filt.any? { |x| x._col == attrs.field_name.to_s } }}
+							<span id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">{{ filter_label(attrs.field_name) }}</span>
+						{{ else }}
+					  	<span class="fa fa-ellipsis-h" id="dropdownMenu1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"></span>
+						{{ end }}
 					  <ul id="dropdown" class="dropdown-menu keep-open-on-click" aria-labelledby="dropdownMenu1">
 							<form e-submit="apply_filters(attrs.field_name)">
+							<li style="padding: 5px;">Filter Column</li>
 					    <li style="padding: 5px;">
 								<select value="{{options}}" class="form-control">
 									<option value=""></option>
@@ -29,9 +36,6 @@
 						</form>
 					  </ul>
 					</div>
-					<!-- {{ if page._column_filt != [] }}
-						<p>{{ filter_label(attrs.field_name) }}</p>
-					{{ end }}	 -->
 				</div>
 			</div>
 		{{ else }}
