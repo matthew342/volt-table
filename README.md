@@ -60,6 +60,8 @@ Use `params._sort_field ||=` to set the default column to be sorted and `params.
 
 `sort_name: 'field name'`  adds ability for column to be sorted and filtered
 
+`sort_reverse: true` initial sorting order is in reverse
+
 #### Attributes
 `source=` passes the data to the table
 
