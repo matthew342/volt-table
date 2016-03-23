@@ -2,6 +2,6 @@
   <:table:headers/>
   <:table:wrapper>
     <:table:columns />
-    <:table:main:body source="{{ attrs.source }}"/>
+    <:table:main:body source="{{ attrs.source }}" source_name="{{ attrs.source_name }}"/>
   </:table:wrapper>
-  <:table:footers table_size="{{ table_size }}" total_size="{{ total_size }}"/>
+  <:table:footers table_size="{{ table_size }}" source_name="{{ attrs.source_name }}" total_size="{{ total_size }}"/>

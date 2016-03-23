@@ -20,7 +20,7 @@
 						{{ end }}
 					  <ul id="dropdown" class="dropdown-menu keep-open-on-click" aria-labelledby="dropdownMenu1">
 							<form e-submit="apply_filters(attrs.field_name)">
-							<li style="padding: 5px;">Filter Column</li>
+							<li style="padding: 5px;">Filter {{ attrs.label }}</li>
 					    <li style="padding: 5px;">
 								<select value="{{options}}" class="form-control">
 									<option value=""></option>

@@ -115,13 +115,20 @@ module Table
 
     def total_size
       # TODO: volt-mongo loads the entire collection into memory for counts as of 9-7-15
-      attrs.total_size || 500 #attrs.source.count
+      #attrs.total_size || 500 #attrs.source.count
+      query = {}
+      CountTask.total_count(attrs.source_name, query)
     end
 
     def table_size
       # TODO: volt-mongo loads the entire collection into memory for counts as of 9-7-15
       # searched_data.count
-      attrs.total_size || 500
+      if params._query && !params._query.empty?
+        query = build_query
+      else
+        query = column_filters
+      end
+      CountTask.count(attrs.source_name, query)
     end
 
   end

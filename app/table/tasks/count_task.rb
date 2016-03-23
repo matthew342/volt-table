@@ -1,5 +1,9 @@
 class CountTask < Volt::Task
-  def count(filter)
-    Volt::DataStore.fetch.db[attrs.db].find(filter).count
+  def count(data, filter)
+    Volt::DataStore.fetch.db[data.to_s].find(filter).count
+  end
+
+  def total_count(data, filter)
+    Volt::DataStore.fetch.db[data.to_s].find(filter).count
   end
 end
