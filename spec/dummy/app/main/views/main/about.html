@@ -2,6 +2,15 @@
   About
 
 <:Body>
-  <h1>About</h1>
-
-  <p>About page...</p>
+  <h1>Table no wrapper</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Users Table
+        </div>
+        <div class="panel-body">
+          <:table source="{{ all_users }}" source_name="users"/>
+        </div>
+      </div>
+    </div>
+  </div>

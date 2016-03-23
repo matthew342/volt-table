@@ -1,6 +1,6 @@
 # Volt::Table
 
-volt-table provides a table with the ability to search, sort, and filter data. 
+volt-table provides a table with the ability to search, sort, and filter data.
 
 ## Installation
 
@@ -18,40 +18,43 @@ Or install it yourself as:
 
 ## Usage
 
+### Include table in dependencies.rb
+
+    component 'table'
+
 ### Using without a block
 
-In your controller, set up a ```FIX ME``` hash:
+In your controller, set up a page._table hash:
+
 ```
 before_action :set_default_table_options, only: :index
 
 def set_default_table_options
   params._sort_field ||= "last_name"
   params._sort_direction ||= 1
-# FIX
-   = {
-    search_fields: [:first_name, :last_name],
+  page._table = {
+    default_click_event: 'user_click',
     columns: [
-    {title: "External ID", field_name: "external_id", shown: false},
-    {title: "External Family ID", field_name: "external_family_id", shown: false},
-    {title: "First Name", field_name: "first_name", shown: true},
-    {title: "Last Name", field_name: "last_name", shown: true},
-    {title: "Date of Birth", field_name: 'formatted_dob', sort_name: 'birthdate', sort_reverse: true, shown: true},
-    {title: "Age", field_name: "age", sort_name: 'birthdate', shown: true},
-    {title: "Last Visit", field_name: "last_visit", shown: true},
-    {title: "Family Balance", field_name: "family_balance", shown: false},
-    {title: "Status", field_name: "status", shown: true}
+      {title: "First Name", search_field: 'first', field_name: 'first_name', sort_name: 'first_name', shown: true},
+      {title: "Last Name", search_field: 'last', field_name: 'last_name', sort_name: 'last_name', shown: true},
+      {title: "Email", search_field: 'email', field_name: 'email', sort_name: 'email', shown: true},
     ]
   }
 end
 ```
+
 #### Options
-| Field | Description | Options |
-| search_fields | An array of fields to be searched. | [:field, :field], nil |
-| columns | An array of column definitions | {title: "Field Title", field_name: 'field_name', sort_name: 'field_sort_name', shown: false} |
+| Header One     | Header Two     |
+| :------------- | :------------- |
+| Item One       | Item Two       |
 
 
+In your views, set up a table tag
+```
+<:table source="{{ store.users.all }}" source_name="users"/>
+```
+##### Attributes
 
-<:table source="{{ store.something }}" />
 
 ### Using with a block
 
