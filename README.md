@@ -1,9 +1,6 @@
-# WORK IN PROGRESS
-*Not ready for use*
-
 # Volt::Table
 
-TODO: Write a gem description
+volt-table provides a table with the ability to search, sort, and filter data. 
 
 ## Installation
 

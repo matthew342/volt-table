@@ -5,7 +5,6 @@ describe 'sample integration test', type: :feature do
   # specified.  Current values for ENV['BROWSER'] are 'firefox' and 'phantom'
   it 'should load the page' do
     visit '/'
-
     expect(page).to have_content('Home')
   end
 end

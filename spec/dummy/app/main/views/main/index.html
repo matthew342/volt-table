@@ -2,5 +2,24 @@
   Home
 
 <:Body>
-  <h1>Home</h1>
-
+  <h1>Table</h1>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="panel panel-primary">
+        <div class="panel-heading">Users Table
+        </div>
+        <div class="panel-body">
+          <div class="row">
+            <div class="col-xs-12">
+              <:table:headers />
+            </div>
+          </div>
+          <:table:wrapper>
+            <:table:columns />
+            <:table:main:body source="{{ all_users }}" source_name="users" e-user_click="show_user_detail"/>
+          </:table:wrapper>
+          <:table:main:footers source="{{ all_users }}" source_name="users" />
+        </div>
+      </div>
+    </div>
+  </div>

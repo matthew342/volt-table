@@ -1,12 +1,30 @@
 # By default Volt generates this controller for your Main component
 module Main
   class MainController < Volt::ModelController
+    before_action :set_default_table_options, only: :index
+
     def index
       # Add code for when the index view is loaded
     end
 
     def about
       # Add code for when the about view is loaded
+    end
+
+    def set_default_table_options
+      params._sort_field ||= "last_name"
+      params._sort_direction ||= 1
+      page._table = {
+        default_click_event: 'user_click',
+        columns: [
+          {title: "First Name", search_field: 'first', field_name: 'first_name', sort_name: 'first_name', shown: true},
+          {title: "Last Name", search_field: 'last', field_name: 'last_name', sort_name: 'last_name', shown: true},
+        ]
+      }
+    end
+
+    def all_users
+      store.users.all
     end
 
     private

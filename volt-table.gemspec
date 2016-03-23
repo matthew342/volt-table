@@ -25,9 +25,13 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'rspec', '~> 3.2.0'
   spec.add_development_dependency 'opal-rspec', '~> 0.4.2'
   spec.add_development_dependency 'capybara', '~> 2.4.4'
-  spec.add_development_dependency 'selenium-webdriver', '~> 2.47.0'
+  spec.add_development_dependency 'selenium-webdriver', '~> 2.53.0'
   spec.add_development_dependency 'chromedriver-helper', '~> 1.0.0'
   spec.add_development_dependency 'poltergeist', '~> 1.6.0'
+  spec.add_development_dependency 'volt-browser_irb'
+  spec.add_development_dependency 'guard'
+  spec.add_development_dependency 'guard-rspec', '~> 4.3.0'
+  spec.add_development_dependency 'volt-pagination'
 
   # Gems to run the dummy app
   spec.add_development_dependency 'volt-mongo', '0.1.1'
