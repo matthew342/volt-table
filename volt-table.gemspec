@@ -31,7 +31,9 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'volt-browser_irb'
   spec.add_development_dependency 'guard'
   spec.add_development_dependency 'guard-rspec', '~> 4.3.0'
-  spec.add_development_dependency 'volt-pagination'
+  spec.add_development_dependency 'faker', '~> 1.4'
+  spec.add_development_dependency 'timecop'
+  spec.add_development_dependency 'ruby-progressbar'
 
   # Gems to run the dummy app
   spec.add_development_dependency 'volt-mongo', '0.1.1'
@@ -39,5 +41,6 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'volt-bootstrap_jumbotron_theme', '~> 0.1.0'
   spec.add_development_dependency 'volt-user_templates', '~> 0.4.0'
   spec.add_development_dependency 'thin', '~> 1.6.0'
+  spec.add_development_dependency 'volt-pagination'
 
 end

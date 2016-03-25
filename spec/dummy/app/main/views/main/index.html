@@ -16,7 +16,7 @@
           </div>
           <:table:wrapper>
             <:table:columns />
-            <:table:main:body source="{{ all_users }}" source_name="users" e-user_click="show_user_detail"/>
+            <:table:main:body source="{{ all_users }}" source_name="users" e-user_click="show_user_detail" e-email_click="show_email"/>
           </:table:wrapper>
           <:table:main:footers source="{{ all_users }}" source_name="users" />
         </div>

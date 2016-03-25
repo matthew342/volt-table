@@ -2,6 +2,7 @@
 module Main
   class MainController < Volt::ModelController
     before_action :set_default_table_options, only: :index
+    before_action :set_default_table2_options, only: :about
 
     def index
       # Add code for when the index view is loaded
@@ -19,12 +20,33 @@ module Main
         columns: [
           {title: "First Name", search_field: 'first', field_name: 'first_name', sort_name: 'first_name', shown: true},
           {title: "Last Name", search_field: 'last', field_name: 'last_name', sort_name: 'last_name', shown: true},
+          {title: "Email", search_field: 'email', field_name: 'email', sort_name: 'email', click_event: 'email_click', shown: true},
+        ]
+      }
+    end
+
+    def set_default_table2_options
+      params._sort_field ||= "last_name"
+      params._sort_direction ||= 1
+      page._table = {
+        columns: [
+          {title: "First Name", search_field: 'first', field_name: 'first_name', sort_name: 'first_name', shown: true},
+          {title: "Last Name", search_field: 'last', field_name: 'last_name', sort_name: 'last_name', shown: true},
+          {title: "Email", search_field: 'email', field_name: 'email', sort_name: 'email', shown: true},
         ]
       }
     end
 
     def all_users
       store.users.all
+    end
+
+    def show_user_detail(id)
+      puts id
+    end
+
+    def show_email(id)
+      puts "email of :#{id}"
     end
 
     private
