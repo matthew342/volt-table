@@ -6,6 +6,7 @@ describe 'Table', type: :feature do
   describe 'tests' do
     before do
       # Factories.custom_user({method: :save}, 'Bob', 'Smith')
+      #  store._users! << { email: 'test@test.com', password: 'awes0mesEcRet', first_name: 'Erik', last_name: 'Gabrielsen'}
     end
 
     it 'should load the page' do
@@ -62,7 +63,10 @@ describe 'Table', type: :feature do
     end
 
     describe 'filtering' do
-      it 'should filter '
+      it 'should open filter' do
+        visit '/about'
+        find('.glyphicon-search').click
+      end
     end
 
 

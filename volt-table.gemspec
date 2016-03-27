@@ -36,7 +36,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'ruby-progressbar'
 
   # Gems to run the dummy app
-  spec.add_development_dependency 'volt-mongo', '0.1.1'
+  spec.add_development_dependency 'volt-mongo'
   spec.add_development_dependency 'volt-bootstrap', '~> 0.1.0'
   spec.add_development_dependency 'volt-bootstrap_jumbotron_theme', '~> 0.1.0'
   spec.add_development_dependency 'volt-user_templates', '~> 0.4.0'

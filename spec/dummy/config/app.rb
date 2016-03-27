@@ -102,11 +102,11 @@ Volt.configure do |config|
   #
   # Encrypt message bus - messages on the message bus are encrypted by default
   # using rbnacl.
-  
+
   #
   # For dummy apps, we disable_encryption, to simplify the gem requirements.
   config.message_bus.disable_encryption = true
-  
+
   #
   # ## MessageBus Server -- the message bus binds to a port and ip which the
   # other volt instances need to be able to connect to.  You can customize
