@@ -62,6 +62,12 @@ module Table
           "> #{page._column_filt[index]._value}"
         elsif page._column_filt[index]._option == '$lt'
           "< #{page._column_filt[index]._value}"
+        elsif page._column_filt[index]._option == '$lte'
+          "<= #{page._column_filt[index]._value}"
+        elsif page._column_filt[index]._option == '$gte'
+          ">= #{page._column_filt[index]._value}"
+        elsif page._column_filt[index]._option == '$eq'
+          "= #{page._column_filt[index]._value}"
         else
           ""
         end
