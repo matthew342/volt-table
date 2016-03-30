@@ -4,12 +4,9 @@ source 'https://rubygems.org'
 gemspec
 
 # Optional Gems for testing/dev
-
+gem 'volt', git: 'https://github.com/matthew342/volt.git', branch: :volttime_nil_comparison
+gem 'volt-mongo', '~> 0.2.0'
 # The implementation of ReadWriteLock in Volt uses concurrent ruby and ext helps performance.
-gem 'concurrent-ruby-ext', '~> 0.8.0'
-
-# For mongo (optional)
-gem 'bson_ext', '~> 1.9.0'
 
 # Gems you use for development should be added to the gemspec file as
 # development dependencies.

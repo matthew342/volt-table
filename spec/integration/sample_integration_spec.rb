@@ -1,15 +1,19 @@
 require 'spec_helper'
+require 'pry'
 
 describe 'Table', type: :feature do
   # An example integration spec, this will only be run if ENV['BROWSER'] is
   # specified.  Current values for ENV['BROWSER'] are 'firefox' and 'phantom'
   describe 'tests' do
     before do
-      # Factories.custom_user({method: :save}, 'Bob', 'Smith')
-      #  store._users! << { email: 'test@test.com', password: 'awes0mesEcRet', first_name: 'Erik', last_name: 'Gabrielsen'}
+      Factories.custom_user({method: :save}, 'Bob', 'Smith')
+      Factories.custom_user({method: :save}, 'Lauren', 'Jones')
+      Factories.custom_user({method: :save}, 'John', 'Smith')
+      Factories.custom_user({method: :save}, 'Bob', 'John')
+      Factories.custom_user({method: :save}, 'Mary', 'Jacobs')
     end
 
-    it 'should load the page' do
+    it 'should load the page', focus: true do
       visit '/'
       expect(page).to have_content('Home')
     end
