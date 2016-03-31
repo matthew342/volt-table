@@ -6,8 +6,8 @@ module Table
     end
 
     def last_item
+      range = start_offset + params._per_page.to_i
       attrs.table_size.then do |size|
-        range = start_offset + params._per_page.to_i
         if range >= size
           size
         else

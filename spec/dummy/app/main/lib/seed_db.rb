@@ -1,10 +1,10 @@
 require_relative '../../../../factories'
 require 'ruby-progressbar'
 
-num_users = 5
+num_users = 50
 
 progressbar = ProgressBar.create
-progressbar.total = 1 + num_users
+progressbar.total = 6 + num_users
 
 #create Custom Users, used for testing
 
@@ -25,3 +25,8 @@ progressbar.increment
 
 Factories.custom_user({method: :save}, 'Mary', 'Joe')
 progressbar.increment
+
+num_users.times do
+  Factories.user({method: :save})
+  progressbar.increment
+end

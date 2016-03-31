@@ -8,21 +8,28 @@ describe 'Table', type: :feature do
     before do
       Factories.custom_user({method: :save}, 'Bob', 'Smith')
       Factories.custom_user({method: :save}, 'Lauren', 'Jones')
-      Factories.custom_user({method: :save}, 'John', 'Smith')
+      Factories.custom_user({method: :save}, 'Jerry', 'Smith')
       Factories.custom_user({method: :save}, 'Bob', 'John')
       Factories.custom_user({method: :save}, 'Mary', 'Jacobs')
     end
 
-    it 'should load the page', focus: true do
+    it 'should load the page' do
       visit '/'
       expect(page).to have_content('Home')
     end
 
     it 'should have correct content' do
       visit '/'
+      expect(page).to have_content('Bob')
+      expect(page).to have_content('Lauren')
+      expect(page).to have_content('John')
+      expect(page).to have_content('Bob')
+      expect(page).to have_content('Mary')
       expect(page).to have_content('First Name')
       expect(page).to have_content('Last Name')
       expect(page).to have_content('Email')
+      expect(page).to have_content('Showing 1 - 5 of 5')
+      expect(page).to have_content('Filtered from a total of 5')
     end
 
     describe 'search bar' do
@@ -47,41 +54,66 @@ describe 'Table', type: :feature do
         fields = all(:css, '.form-control')
         fields[0].set('Bob | Jerry')
         # expect correct rows to be shown
-        # expect to not see Mary
+        expect(page).to have_content('Bob')
+        expect(page).to have_content('Jerry')
+        expect(page).not_to have_content('Mary')
+        expect(page).not_to have_content('Lauren')
+        expect(page).to have_content('Showing 1 - 3 of 3')
       end
 
       it 'should accept AND queries' do
         fields = all(:css, '.form-control')
         fields[0].set('Bob, Smith')
-        # expect correct rows to be shown
+        expect(page).to have_content('Bob')
+        expect(page).to have_content('Smith')
+        expect(page).not_to have_content('Mary')
+        expect(page).not_to have_content('Lauren')
+        expect(page).not_to have_content('Jerry')
+        expect(page).to have_content('Showing 1 - 1 of 1')
       end
 
-      it 'should accept field queries' do
+      it 'should accept a field query' do
         fields = all(:css, '.form-control')
-        fields[0].set('Bob, email:Bob.Barker@sample.com')
+        fields[0].set('Lauren, email:Lauren.Jones@sample.com')
         # expect correct rows to be shown
+        expect(page).not_to have_content('Jerry')
+        expect(page).not_to have_content('Bob')
+        expect(page).not_to have_content('Mary')
+        expect(page).to have_content('Lauren')
+        expect(page).to have_content('Showing 1 - 1 of 1')
       end
     end
 
     describe 'headers' do
       before do
+        50.times do
+          Factories.user({method: :save})
+        end
         visit '/'
       end
 
       describe 'per_page' do
-        it 'should have correct default values' do
+        it 'should have correct default values', focus: true do
           expect(page).to have_content('Clear All Filters')
           expect(page).to have_content('Show 10')
+          expect(page).to have_content('Showing 1 - 10 of 55')
           click_button('Show 10')
           expect(page).to have_content('10')
           expect(page).to have_content('25')
           expect(page).to have_content('50')
+        end
+
+        it 'should show 25 rows', focus: true do
+          click_button('Show 10')
           find("a", :text => "25").click
-          #expect 25 elements
           expect(page).to have_content('Show 25')
-          click_button('Show 25')
+          expect(page).to have_content('Showing 1 - 25 of 55')
+        end
+
+        it 'should show 50 rows', focus: true do
+          click_button('Show 10')
           find("a", :text => "50").click
-          #expect 50 elements
+          expect(page).to have_content('Showing 1 - 50 of 55')
           expect(page).to have_content('Show 50')
         end
       end
