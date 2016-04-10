@@ -1,10 +1,10 @@
 module Table
   class MainController < Volt::ModelController
-    before_action :set_default_options, only: :index
 
-    def set_default_options
+    def body
       params._per_page ||= 10
       params._sort_direction ||= 1
+      page._column_filt ||= []
     end
 
     def trigger_row_click(item_id)
@@ -55,7 +55,7 @@ module Table
             ands << {'$or' => any_match(piece)}
           end
         end
-        ands << column_filters
+        ands << column_filters if column_filters
         {'$and' => ands}
       end
     end
@@ -79,14 +79,10 @@ module Table
 
     def column_filters
       ands = []
-      if page._column_filt == nil || page._column_filt == []
-        {}
-      else
-        page._column_filt.each do |filter|
-          ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
-        end
-        {'$and' => ands}
+      page._column_filt.each do |filter|
+        ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
       end
+      ands unless ands.empty?
     end
 
     def search_fields
@@ -117,7 +113,9 @@ module Table
       # TODO: volt-mongo loads the entire collection into memory for counts as of 9-7-15
       #attrs.total_size || 500 #attrs.source.count
       query = {}
-      CountTask.total_count(attrs.source_name, query)
+      attrs.source.path.then do |path|
+        CountTask.count(path[0], query)
+      end
     end
 
     def table_size
@@ -128,7 +126,9 @@ module Table
       else
         query = column_filters
       end
-      CountTask.count(attrs.source_name, query)
+      attrs.source.path.then do |path|
+        CountTask.count(path[0], query)
+      end
     end
 
   end

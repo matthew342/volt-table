@@ -3,25 +3,29 @@ module Table
     reactive_accessor :options
     reactive_accessor :values
 
+    ##############
+    # Actions
+    ##############
+
     def index
-      `$(document).on('click', '.dropdown-menu', function(e) {
-        if ($(this).hasClass('keep-open-on-click')) {
-          e.stopPropagation();
-        }
-      });`
       page._column_filt = []
     end
 
-    def sort(field)
-      toggle_sort_direction(field)
-      params._sort_field = field
-    end
+    ##############
+    # Callbacks
+    ##############
 
-    def sort_direction(reverse)
-      if reverse
-        params._sort_direction.to_i == 1 ? 'down' : 'up'
-      else
-        params._sort_direction.to_i == 1 ? 'up' : 'down'
+    ##############
+    # Data Sources
+    ##############
+
+    ##############
+    # Events
+    ##############
+    def sort(field)
+      if field
+        toggle_sort_direction(field)
+        params._sort_field = field
       end
     end
 
@@ -35,21 +39,39 @@ module Table
       end
     end
 
-    ####################
-    ## Column Filters ##
-    ####################
-    def apply_filters(item)
+    def apply_filters(item, event)
       page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
       unless options == nil || values == nil || options == '' || values == ''
         page._column_filt << {col: "#{item}", option: "#{options}", value: "#{values}" }
       end
+      `$(#{event.target}).closest('.dropdown').removeClass('open')`
+      nil
     end
 
-    def reset(item)
+    def reset(item, event)
       options = ""
       values = ""
       if page._column_filt.any? { |x| x._col == item.to_s }
         page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
+      end
+      `$(#{event.target}).closest('.dropdown').removeClass('open')`
+      nil
+    end
+
+    ##############
+    # Display
+    ##############
+    def header_sort_klass(label)
+      if params._sort_field == label
+        params._sort_direction.to_i == 1 ? 'headerSortDown' : 'headerSortUp'
+      end
+    end
+
+    def sort_direction(reverse)
+      if reverse
+        params._sort_direction.to_i == 1 ? 'down' : 'up'
+      else
+        params._sort_direction.to_i == 1 ? 'up' : 'down'
       end
     end
 

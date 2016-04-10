@@ -2,15 +2,14 @@ require 'spec_helper'
 require 'pry'
 
 describe 'Table', type: :feature do
-  # An example integration spec, this will only be run if ENV['BROWSER'] is
-  # specified.  Current values for ENV['BROWSER'] are 'firefox' and 'phantom'
-  describe 'tests' do
+  # Will only be run if ENV['BROWSER'] is specified.
+  # Current values for ENV['BROWSER'] are 'firefox' and 'phantom'
     before do
-      Factories.custom_user({method: :save}, 'Bob', 'Smith')
-      Factories.custom_user({method: :save}, 'Lauren', 'Jones')
-      Factories.custom_user({method: :save}, 'Jerry', 'Smith')
-      Factories.custom_user({method: :save}, 'Bob', 'John')
-      Factories.custom_user({method: :save}, 'Mary', 'Jacobs')
+      Factories.user({method: :save, first_name: 'Bob', last_name: 'Smith'})
+      Factories.user({method: :save, first_name: 'Lauren', last_name: 'Jones'})
+      Factories.user({method: :save, first_name: 'Jerry', last_name: 'Smith'})
+      Factories.user({method: :save, first_name: 'Bob', last_name: 'John'})
+      Factories.user({method: :save, first_name: 'Mary', last_name: 'Jacobs'})
     end
 
     it 'should load the page' do
@@ -38,7 +37,7 @@ describe 'Table', type: :feature do
       end
 
       it 'should show search help' do
-        find('.glyphicon-search').click
+        find('.fa-search').click
         expect(page).to have_content('Search Help')
         expect(page).to have_content('first:')
         expect(page).to have_content('last:')
@@ -165,10 +164,8 @@ describe 'Table', type: :feature do
     describe 'filtering' do
       it 'should open filter' do
         visit '/about'
-        find('.glyphicon-search').click
+        find('.fa-search').click
       end
     end
 
-
-  end
 end

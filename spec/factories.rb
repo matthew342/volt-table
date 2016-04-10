@@ -15,19 +15,6 @@ module Factories
     build_model(buffer, fields, options)
   end
 
-  def self.custom_user(options = {}, first, last)
-    buffer = Volt.current_app.store.users.buffer
-    first_name = first
-    last_name = last
-    fields = {
-        first_name: first_name,
-        last_name: last_name,
-        email: "#{first_name}.#{last_name}@sample.com",
-        password: 'testing1234',
-    }
-    build_model(buffer, fields, options)
-  end
-
   def self.build_model(buffer, fields, options)
     field_keys = fields.keys.push(*options.keys)
     field_keys.delete(:method)

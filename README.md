@@ -1,6 +1,6 @@
-# Volt::Table
+# Volt-table
 
-volt-table provides a table with the ability to search, sort, and filter data.
+volt-table provides a table with pagination, search, sorting, and filtering.
 
 ## Installation
 
@@ -43,7 +43,7 @@ In your controller, set up a page._table hash:
 
 In your views, set up a table tag
 
-    <:table source="{{ store.users.all }}" source_name="users" />
+    <:table source="{{ store.users.all }}" />
 
 #### Options
 Use `params._sort_field ||=` to set the default column to be sorted and `params._sort_direction ||=` (1 or -1) for the sort direction. Sorted alphabetical and numerical
@@ -64,8 +64,6 @@ Use `params._sort_field ||=` to set the default column to be sorted and `params.
 
 #### Attributes
 `source=` passes the data to the table
-
-`source_name=` the name of the model (i.e. users for store.users.all)
 
 ### Using with a block (click events)
 In your controller, set up a page._table hash:
@@ -103,9 +101,9 @@ In Views, add the table block with the attributes for both click events on the t
      <:table:headers />  
      <:table:wrapper>
          <:table:columns />
-         <:table:main:body source="{{ store.users.all }}" source_name="users" e-user_click="user_clicked" e-email_click="email_clicked"/>
+         <:table:main:body source="{{ store.users.all }}" e-user_click="user_clicked" e-email_click="email_clicked"/>
      </:table:wrapper>
-     <:table:main:footers source="{{ store.users.all }}" source_name="users" />
+     <:table:main:footers source="{{ store.users.all }}" />
 
 #### Additional Options with block
 `default_click_event: 'some_action'` trigger this event when a row in the table is clicked
@@ -129,7 +127,7 @@ The search bar uses simple boolean queries to search for data. Simply enter in a
 
 ## Contributing
 
-1. Fork it ( http://github.com/[my-github-username]/volt-table/fork )
+1. Fork it ( http://github.com/matthew342/volt-table/fork )
 2. Create your feature branch (`git checkout -b my-new-feature`)
 3. Commit your changes (`git commit -am 'Add some feature'`)
 4. Push to the branch (`git push origin my-new-feature`)

@@ -8,8 +8,8 @@ Gem::Specification.new do |spec|
   spec.version       = Volt::Table::VERSION
   spec.authors       = ["Matt Hale"]
   spec.email         = ["matt.hale.0@gmail.com"]
-  spec.summary       = %q{Sortable table component for Volt.}
-  spec.description   = %q{It's a table.}
+  spec.summary       = %q{Provides a searchable, sortable, filterable table component for Volt.}
+  spec.description   = %q{It's datatables for Volt.}
   spec.homepage      = ""
   spec.license       = "MIT"
 
@@ -35,7 +35,8 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency 'ruby-progressbar'
 
   # Gems to run the dummy app
-  # spec.add_development_dependency 'volt-mongo', '~> 0.2.0'
+  spec.add_development_dependency 'volt', '0.9.6' #git: 'https://github.com/matthew342/volt.git', branch: :volttime_nil_comparison
+  spec.add_development_dependency 'volt-mongo', '~> 0.2.0'
   spec.add_development_dependency 'volt-bootstrap', '~> 0.1.0'
   spec.add_development_dependency 'volt-bootstrap_jumbotron_theme', '~> 0.1.0'
   spec.add_development_dependency 'volt-user_templates', '~> 0.4.0'
