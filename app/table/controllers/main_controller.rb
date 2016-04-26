@@ -55,7 +55,7 @@ module Table
             ands << {'$or' => any_match(piece)}
           end
         end
-        # ands << column_filters if column_filters
+        ands << column_filters #if column_filters
         {'$and' => ands}
       end
     end
@@ -79,10 +79,14 @@ module Table
 
     def column_filters
       ands = []
-      page._column_filt.each do |filter|
-        ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
+      if page._column_filt == nil || page._column_filt == []
+        {}
+      else
+        page._column_filt.each do |filter|
+          ands << {filter._col => {"#{filter._option}" => "#{filter._value}"}}
+        end
+        {'$and' => ands}
       end
-      ands unless ands.empty?
     end
 
     def search_fields
