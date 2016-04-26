@@ -7,8 +7,8 @@
 .popover {
   width: 250px !important;
   display: none;
-  top: -60px;
-  left: 39px;
+  top: 20px;
+  z-index: 100000 !important;
 }
 th {
   vertical-align: bottom !important;

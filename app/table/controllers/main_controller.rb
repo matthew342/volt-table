@@ -55,7 +55,7 @@ module Table
             ands << {'$or' => any_match(piece)}
           end
         end
-        ands << column_filters if column_filters
+        # ands << column_filters if column_filters
         {'$and' => ands}
       end
     end
