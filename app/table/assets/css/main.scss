@@ -31,12 +31,12 @@ th {
   color: #337ab7 !important;
 }
 .btn-middle {
-  border-radius: 0px;
+  border-radius: 0px !important;
 }
 .btn-left {
-  border-right: none;
-  border-top-right-radius: 0px;
-  border-bottom-right-radius: 0px;
+  border-right: none !important;
+  border-top-right-radius: 0px !important;
+  border-bottom-right-radius: 0px !important;
 }
 .infos {
   float: right;
