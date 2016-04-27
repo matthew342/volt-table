@@ -40,6 +40,7 @@ module Table
     end
 
     def apply_filters(item, event)
+      page._column_filt << {col: "#{item}", option: "#{options}", value: "#{values}" }
       page._column_filt = page._column_filt.reject { |h| item.to_s.include? h._col }
       unless options == nil || values == nil || options == '' || values == ''
         page._column_filt << {col: "#{item}", option: "#{options}", value: "#{values}" }
